@@ -1,0 +1,13 @@
+name: ProMod
+version: 1.0
+author: autoit4you
+
+main: me.autoit4you.promod.ProMod
+
+commands:
+ player:
+   usage: /player
+   description: To enter normal user mode
+ mod:
+   usage: /mod
+   description: To exit normal user mode
