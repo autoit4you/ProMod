@@ -26,6 +26,7 @@ public class ProMod extends JavaPlugin implements Listener{
 	private saveInventory inv = null;
 	private HashMap<String, Boolean> mods = new HashMap<String, Boolean>();
 	private List<String> commands = null;
+	private List<String> commandsmod = null;
 	private FileConfiguration config;
 	
 	@Override
@@ -52,6 +53,7 @@ public class ProMod extends JavaPlugin implements Listener{
 			config = YamlConfiguration.loadConfiguration(new File("plugins/ProMod/system.yml"));
 		}
 		commands = getConfig().getStringList("blocked-commands");
+		commandsmod = getConfig().getStringList("blocked-commands-mod");
 		if(commands == null){
 			getServer().getPluginManager().disablePlugin(this);
 			return;
@@ -76,7 +78,7 @@ public class ProMod extends JavaPlugin implements Listener{
 			return true;
 		}
 		Player player = (Player) sender;
-		if(cmd.getName().equalsIgnoreCase("player")){
+		if(cmd.getName().equalsIgnoreCase("player") && player.hasPermission("promod.watched")){
 			if(!mods.containsKey(player.getName())){
 				mods.put(player.getName(), true);
 				player(player);
@@ -86,7 +88,7 @@ public class ProMod extends JavaPlugin implements Listener{
 				sender.sendMessage(ChatColor.RED + "You are already playing as normal user!");
 				return true;
 			}
-		}else if(cmd.getName().equalsIgnoreCase("mod")){
+		}else if(cmd.getName().equalsIgnoreCase("mod") && player.hasPermission("promod.watched")){
 			if(mods.containsKey(player.getName())){
 				mods.remove(player.getName());
 				mod(player);
@@ -115,10 +117,28 @@ public class ProMod extends JavaPlugin implements Listener{
 				return;
 			}
 			if(commands.contains(message)){
-				//if(!player.hasPermission("promod.ignore")){
+				if(!player.hasPermission("promod.ignore")){
 					player.sendMessage(ChatColor.RED + "You cant use that command while playing as normal user!");
 					event.setCancelled(true);
-				//}
+				}
+			}
+		}
+		if(player.hasPermission("promod.watched") && !mods.containsKey(player.getName())){
+			String message = null;
+			if(event.getMessage().contains("/")){
+				int index = event.getMessage().length();
+				if(event.getMessage().contains(" ")){
+					index = event.getMessage().indexOf(" ");
+				}
+				message = event.getMessage().substring(1, index);
+			}else{
+				return;
+			}
+			if(commandsmod.contains(message)){
+				if(!player.hasPermission("promod.ignore")){
+					player.sendMessage(ChatColor.RED + "You cant use that command while playing as moderator!");
+					event.setCancelled(true);
+				}
 			}
 		}
 	}

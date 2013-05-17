@@ -74,19 +74,19 @@ public class saveInventory {
 		contentsList.add(oObject);
 		
 		oObject = new NBTTagCompound();
-		craft = getItem(head);
+		craft = getItem(chest);
 		if(craft != null)
 			CraftItemStack.asNMSCopy(craft).save(oObject);
 		contentsList.add(oObject);
 		
 		oObject = new NBTTagCompound();
-		craft = getItem(head);
+		craft = getItem(leggings);
 		if(craft != null)
 			CraftItemStack.asNMSCopy(craft).save(oObject);
 		contentsList.add(oObject);
 		
 		oObject = new NBTTagCompound();
-		craft = getItem(head);
+		craft = getItem(boots);
 		if(craft != null)
 			CraftItemStack.asNMSCopy(craft).save(oObject);
 		contentsList.add(oObject);
