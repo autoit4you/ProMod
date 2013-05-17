@@ -54,7 +54,7 @@ public class ProMod extends JavaPlugin implements Listener{
 		}
 		commands = getConfig().getStringList("blocked-commands");
 		commandsmod = getConfig().getStringList("blocked-commands-mod");
-		if(commands == null){
+		if(commands == null || commandsmod == null){
 			getServer().getPluginManager().disablePlugin(this);
 			return;
 		}

@@ -11,3 +11,9 @@ commands:
  mod:
    usage: /mod
    description: To exit normal user mode
+
+permissions:
+ promod.ignore:
+    default: op
+ promod.watched:
+    default: true
